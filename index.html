@@ -1,23 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Book Library</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book Library</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for a modern look */
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        /* Custom scrollbar for the book list */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e0; /* gray-300 */
+            border-radius: 10px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #a0aec0; /* gray-500 */
+        }
+
+        /* Floating buttons styles */
+        .floating-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 50;
+        }
+        .floating-btn-top {
+            bottom: 80px; /* Position above the other floating button */
+        }
+    </style>
 </head>
-<body>
-  <h1>📚 Book Library</h1>
+<body class="bg-gradient-to-r from-indigo-100 via-purple-100 to-pink-100 min-h-screen p-6">
 
-  <form id="book-form">
-    <input type="text" id="title" placeholder="Title" required />
-    <input type="text" id="author" placeholder="Author" required />
-    <input type="text" id="genre" placeholder="Genre" required />
-    <button type="submit">Add Book</button>
-  </form>
+    <div class="text-center text-gray-700 text-lg font-semibold mb-4">
+        <span id="clock" class="px-4 py-2 bg-white rounded shadow"></span>
+    </div>
 
-  <h2>All Books</h2>
-  <ul id="book-list"></ul>
+    <div class="max-w-2xl mx-auto bg-white rounded-xl shadow-2xl p-8 md:p-10 space-y-8">
+        <h1 class="text-4xl font-extrabold text-center text-gray-800 flex items-center justify-center gap-3">
+            <span class="text-indigo-600">📚</span> Book Library
+        </h1>
 
-  <script src="script.js"></script>
+        <form id="book-form" class="space-y-4 scroll-mt-24">
+            <input
+                type="text"
+                id="title"
+                placeholder="Title"
+                required
+                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-indigo-400 placeholder-gray-500"
+            />
+            <input
+                type="text"
+                id="author"
+                placeholder="Author"
+                required
+                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-indigo-400 placeholder-gray-500"
+            />
+            <input
+                type="text"
+                id="genre"
+                placeholder="Genre"
+                required
+                class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-indigo-400 placeholder-gray-500"
+            />
+            <button
+                type="submit"
+                class="w-full bg-indigo-600 text-white p-3 rounded-lg font-semibold shadow hover:bg-indigo-700 transition"
+            >
+                Add Book
+            </button>
+            <div id="message-box" class="hidden p-3 rounded-lg text-sm text-center"></div>
+        </form>
+
+        <h2 class="text-2xl font-bold text-gray-700 text-center">Search Books</h2>
+        <form id="search-form" class="space-y-4">
+            <input type="text" id="search-title" placeholder="Search by Title" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-400" />
+            <input type="text" id="search-author" placeholder="Search by Author" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-400" />
+            <input type="text" id="search-genre" placeholder="Search by Genre" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-pink-400" />
+            <button type="submit" class="w-full bg-pink-600 text-white p-3 rounded-lg font-semibold shadow hover:bg-pink-700 transition">
+                Search
+            </button>
+            <button type="button" id="clear-search" class="w-full bg-gray-400 text-white p-3 rounded-lg font-semibold shadow hover:bg-gray-500 mt-2">
+                Clear Search
+            </button>
+        </form>
+
+        <h2 class="text-2xl font-bold text-gray-700 text-center">All Books</h2>
+        <ul id="book-list" class="space-y-4 max-h-80 overflow-y-auto pr-2 custom-scrollbar">
+            <div id="loading-spinner" class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500 mx-auto my-4 hidden"></div>
+            <p class="text-center text-gray-500" id="loading-message">Loading books...</p>
+            </ul>
+    </div>
+
+    <button id="scrollToTop" class="floating-btn-top fixed right-4 bg-indigo-500 hover:bg-indigo-700 text-white p-3 rounded-full shadow-lg transition hidden">
+        ⬆️
+    </button>
+    <button id="scrollToForm" class="floating-btn fixed right-4 bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg transition">
+        ➕
+    </button>
+
+    <script src="script.js"></script>
 </body>
 </html>
